@@ -29,7 +29,7 @@ export async function bootstrap() {
 
   await app.listen(
     configService.get('PORT') ?? 3000,
-    configService.get<string>('HOST')?.trim() || '127.0.0.1',
+    configService.get<string>('HOST')?.trim() || '0.0.0.0',
   );
   return app;
 }

@@ -10,7 +10,7 @@ import { bootstrap } from './main';
 import { MetricsController } from './metrics/metrics.controller';
 import { MetricsService } from './metrics/metrics.service';
 
-describe('HTTP security defaults', () => {
+describe('HTTP configuration', () => {
   let app: INestApplication<Server>;
   let settings: Record<string, string | number | undefined>;
   const paths = ['/api/kepco/usage', '/metrics'];
@@ -52,13 +52,13 @@ describe('HTTP security defaults', () => {
   });
 
   it.each([undefined, '', '   '])(
-    'binds only to loopback when HOST is %p and keeps local endpoints available',
+    'binds to all IPv4 interfaces when HOST is %p and keeps endpoints available',
     async (host) => {
       settings.HOST = host;
       await bootstrap();
       const server = app.getHttpServer();
       expect(server.address()).toEqual(
-        expect.objectContaining({ address: '127.0.0.1' }),
+        expect.objectContaining({ address: '0.0.0.0' }),
       );
       await request(server).get('/api/kepco/usage').expect(200, { usage: {} });
       await request(server)
@@ -68,11 +68,11 @@ describe('HTTP security defaults', () => {
     },
   );
 
-  it('allows an explicit interface for isolated container networks', async () => {
-    settings.HOST = '0.0.0.0';
+  it('allows an explicit loopback interface', async () => {
+    settings.HOST = '127.0.0.1';
     await bootstrap();
     expect(app.getHttpServer().address()).toEqual(
-      expect.objectContaining({ address: '0.0.0.0' }),
+      expect.objectContaining({ address: '127.0.0.1' }),
     );
   });
 
