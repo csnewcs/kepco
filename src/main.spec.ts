@@ -77,9 +77,9 @@ describe('HTTP security defaults', () => {
   });
 
   it.each([undefined, '', '*', ' * ', ' , * , '])(
-    'does not grant cross-origin access when CORS_ORIGIN is %p',
+    'does not grant cross-origin access when CORS is %p',
     async (origin) => {
-      settings.CORS_ORIGIN = origin;
+      settings.CORS = origin;
       await bootstrap();
       for (const path of paths) {
         const response = await request(app.getHttpServer())
@@ -106,7 +106,7 @@ describe('HTTP security defaults', () => {
       'https://dashboard.example',
       'https://admin.example',
     ];
-    settings.CORS_ORIGIN = ` , ${allowedOrigins[0]}, *, ${allowedOrigins[1]}, `;
+    settings.CORS = ` , ${allowedOrigins[0]}, *, ${allowedOrigins[1]}, `;
     await bootstrap();
     for (const path of paths) {
       for (const origin of allowedOrigins) {

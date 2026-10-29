@@ -17,7 +17,7 @@ KEPCO_ID=
 KEPCO_PW=
 PORT=3000
 HOST=127.0.0.1
-CORS_ORIGIN=
+CORS=
 ```
 
 기본 예시는 [.env.example](.env.example)에 있습니다.
@@ -26,7 +26,7 @@ CORS_ORIGIN=
 `/api/kepco/*`와 `/metrics`는 인증 없이 개인 전력 사용량·요금을 제공하므로 신뢰하는 내부 환경에서만 접근하도록 구성합니다.
 외부 접근이 필요하면 인증을 적용한 리버스 프록시를 사용하고, 애플리케이션 포트를 직접 공개하지 않습니다.
 
-CORS는 기본적으로 비활성화합니다. 브라우저 접근이 필요할 때만 `CORS_ORIGIN=https://dashboard.example.com,https://admin.example.com`처럼 정확한 Origin을 쉼표로 구분해 지정합니다.
+CORS는 기본적으로 비활성화합니다. 브라우저 접근이 필요할 때만 `CORS=https://dashboard.example.com,https://admin.example.com`처럼 정확한 Origin을 쉼표로 구분해 지정합니다.
 빈 항목과 `*`는 허용 목록에서 제외하며, credential 허용 헤더는 보내지 않습니다. CORS는 API 인증이나 네트워크 접근 제한을 대신하지 않습니다.
 
 ## Install

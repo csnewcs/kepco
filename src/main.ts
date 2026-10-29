@@ -10,7 +10,7 @@ export async function bootstrap() {
   app.setGlobalPrefix('api', {
     exclude: ['metrics'],
   });
-  const corsOrigins = (configService.get<string>('CORS_ORIGIN') ?? '')
+  const corsOrigins = (configService.get<string>('CORS') ?? '')
     .split(',')
     .map((origin) => origin.trim())
     .filter((origin) => origin !== '' && origin !== '*');
