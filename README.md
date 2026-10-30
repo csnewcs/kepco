@@ -22,14 +22,6 @@ CORS=
 
 기본 예시는 [.env.example](.env.example)에 있습니다.
 
-기본 리슨 주소는 `0.0.0.0`이며, `HOST`가 비어 있어도 같은 기본값을 사용합니다.
-로컬 접근으로 제한하려면 `HOST=127.0.0.1`로 설정합니다.
-`/api/kepco/*`와 `/metrics`는 인증 없이 개인 전력 사용량·요금을 제공하므로 신뢰하는 내부 환경에서만 접근하도록 구성합니다.
-외부 접근이 필요하면 인증을 적용한 리버스 프록시를 사용하고, 애플리케이션 포트를 직접 공개하지 않습니다.
-
-CORS는 기본적으로 비활성화합니다. 브라우저 접근이 필요할 때만 `CORS=https://dashboard.example.com,https://admin.example.com`처럼 정확한 Origin을 쉼표로 구분해 지정합니다.
-빈 항목과 `*`는 허용 목록에서 제외하며, credential 허용 헤더는 보내지 않습니다. CORS는 API 인증이나 네트워크 접근 제한을 대신하지 않습니다.
-
 ## Install
 
 ```bash
@@ -66,10 +58,6 @@ docker run --rm \
   -e KEPCO_PW=your-password \
   kepco-api
 ```
-
-브리지 네트워크 컨테이너는 기본값인 `0.0.0.0`으로 컨테이너 인터페이스에 리슨하고, 위 예제는 호스트의 포트를 `127.0.0.1`에만 게시합니다.
-호스트 네트워크(`--network host`)에서 로컬 접근으로 제한하려면 `HOST=127.0.0.1`을 명시합니다.
-별도 컨테이너의 Prometheus에서 수집한다면 신뢰하는 전용 Docker 네트워크에 연결하고 호스트 포트 게시를 생략합니다.
 
 컨테이너가 올라오면 아래 엔드포인트를 사용할 수 있습니다.
 
@@ -130,5 +118,4 @@ Prometheus scrape endpoint는 `/metrics` 입니다.
 pnpm run lint
 pnpm exec jest --runInBand
 pnpm run build
-pnpm audit --prod
 ```
